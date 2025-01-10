@@ -3,5 +3,7 @@
 // config for NorthernBytes/AocHelper
 return [
     'session' => env('AOC_HELPER_SESSION'),
-    'namespace' => env('AOC_HELPER_NAMESPACE', 'App\\Solutions'),
+    'solution' => [
+        'path' => env('AOC_HELPER_PATH', 'app/Solutions'),
+    ]
 ];
