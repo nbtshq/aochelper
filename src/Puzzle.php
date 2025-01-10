@@ -16,26 +16,18 @@ abstract class Puzzle extends Command
 
     protected string $puzzleAnswer;
 
-    protected string $puzzleAnswerDescription = "Answer";
+    protected string $puzzleAnswerDescription = 'Answer';
 
     public function __construct()
     {
         parent::__construct();
     }
 
-    /**
-     * @param string $input
-     * @return void
-     */
     public function setPuzzleInput(string $input): void
     {
         $this->puzzleInput = $input;
     }
 
-    /**
-     * @param string $answer
-     * @return void
-     */
     protected function setPuzzleAnswer(string $answer): void
     {
         $this->puzzleAnswer = $answer;
