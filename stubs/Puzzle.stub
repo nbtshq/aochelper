@@ -1,0 +1,23 @@
+<?php
+
+namespace { $namespace };
+
+use NorthernBytes\AocHelper\Puzzle;
+
+class Day{ $day }Part{ $part } extends Puzzle
+{
+    protected int $puzzleDay = { $day };
+
+    protected int $puzzleYear = { $year };
+
+    protected string $puzzleName = "";
+
+    public function handle(): int
+    {
+        $this->components->info("No puzzle implementation.");
+
+        $this->setPuzzleAnswer(42);
+
+        return self::SUCCESS;
+    }
+}
