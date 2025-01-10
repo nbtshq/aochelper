@@ -3,7 +3,6 @@
 namespace NorthernBytes\AocHelper\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 class RunCommand extends Command
@@ -26,6 +25,7 @@ class RunCommand extends Command
 
         if ((new $className) == null) {
             $this->components->error('Class not found');
+
             return self::FAILURE;
         }
 
