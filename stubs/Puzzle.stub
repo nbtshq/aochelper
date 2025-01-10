@@ -10,7 +10,7 @@ class Day{ $day }Part{ $part } extends Puzzle
 
     protected int $puzzleYear = { $year };
 
-    protected string $puzzleName = "";
+    protected string $puzzleName = "{ $name }";
 
     public function handle(): int
     {

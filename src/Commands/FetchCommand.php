@@ -5,6 +5,7 @@ namespace NorthernBytes\AocHelper\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
+use NorthernBytes\AocHelper\Support\Aoc;
 
 class FetchCommand extends Command
 {
@@ -28,11 +29,8 @@ class FetchCommand extends Command
 
         File::ensureDirectoryExists($inputPath);
 
-        $inputRequest = Http::withCookies([
-            'session' => config('aochelper.session'),
-        ], 'adventofcode.com')->withUserAgent(
-            'https://github.com/nbtshq/aochelper by contact@nbts.fi'
-        )->get(sprintf('https://adventofcode.com/%d/day/%d/input', $year, $day));
+        $inputRequest = Aoc::getClient()
+            ->get(sprintf('https://adventofcode.com/%d/day/%d/input', $year, $day));
 
         if ($inputRequest->failed()) {
             $this->components->error('Could not read input from adventofcode.com');

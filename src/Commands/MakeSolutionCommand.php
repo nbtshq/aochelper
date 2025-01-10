@@ -5,6 +5,7 @@ namespace NorthernBytes\AocHelper\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use NorthernBytes\AocHelper\Support\Aoc;
 
 class MakeSolutionCommand extends Command
 {
@@ -36,6 +37,14 @@ class MakeSolutionCommand extends Command
 
         $this->components->info('Preparing Puzzle file...');
 
+        $puzzle = Aoc::getClient()
+            ->get(sprintf('https://adventofcode.com/%d/day/%d', $year, $day))
+            ->getBody()->getContents();
+
+        $name = substr($puzzle, stripos($puzzle, '<article class="day-desc">') + 30, -1);
+        $name = substr($name, 0, stripos($name, '</h2>'));
+        $name = Str::of($name)->replace('-', '');
+
         $stub = Str::of(File::get(__DIR__.'/../../stubs/Puzzle.stub'))
             ->replace('{ $namespace }', sprintf('%s\Year_%s', $namespace, $year))
             ->replace('{ $day }', $day)
@@ -46,13 +55,23 @@ class MakeSolutionCommand extends Command
         if (File::missing(base_path($filenamePart1)) || $force) {
             $this->components->info('Creating Part 1...');
 
-            File::put(base_path($filenamePart1), Str::of($stub)->replace('{ $part }', '1'));
+            File::put(
+                base_path($filenamePart1),
+                Str::of($stub)
+                    ->replace('{ $part }', '1')
+                    ->replace('{ $name }', $name . ':: Part 1')
+            );
         }
 
         if (File::missing(base_path($filenamePart2)) || $force) {
             $this->components->info('Creating Part 2...');
 
-            File::put(base_path($filenamePart2), Str::of($stub)->replace('{ $part }', '2'));
+            File::put(
+                base_path($filenamePart2),
+                Str::of($stub)
+                    ->replace('{ $part }', '2')
+                    ->replace('{ $name }', $name . ':: Part 2')
+            );
         }
 
         $this->components->success('Solution files created.');
