@@ -3,8 +3,8 @@
 namespace NorthernBytes\AocHelper\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Orchestra\Testbench\TestCase as Orchestra;
 use NorthernBytes\AocHelper\AocHelperServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {

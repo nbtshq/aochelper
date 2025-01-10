@@ -2,9 +2,9 @@
 
 namespace NorthernBytes\AocHelper;
 
+use NorthernBytes\AocHelper\Commands\AocHelperCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use NorthernBytes\AocHelper\Commands\AocHelperCommand;
 
 class AocHelperServiceProvider extends PackageServiceProvider
 {
