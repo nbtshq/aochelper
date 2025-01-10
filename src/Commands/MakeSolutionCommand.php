@@ -59,7 +59,7 @@ class MakeSolutionCommand extends Command
                 base_path($filenamePart1),
                 Str::of($stub)
                     ->replace('{ $part }', '1')
-                    ->replace('{ $name }', $name . ':: Part 1')
+                    ->replace('{ $name }', $name.':: Part 1')
             );
         }
 
@@ -70,7 +70,7 @@ class MakeSolutionCommand extends Command
                 base_path($filenamePart2),
                 Str::of($stub)
                     ->replace('{ $part }', '2')
-                    ->replace('{ $name }', $name . ':: Part 2')
+                    ->replace('{ $name }', $name.':: Part 2')
             );
         }
 

@@ -4,7 +4,6 @@ namespace NorthernBytes\AocHelper\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Http;
 use NorthernBytes\AocHelper\Support\Aoc;
 
 class FetchCommand extends Command
