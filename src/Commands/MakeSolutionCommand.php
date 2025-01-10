@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 class MakeSolutionCommand extends Command
 {
-    public $signature = "aoc:make-solution { day } { year? } { --force }";
+    public $signature = 'aoc:make-solution { day } { year? } { --force }';
 
     public $description = 'bar';
 
@@ -18,7 +18,7 @@ class MakeSolutionCommand extends Command
         $year = $this->argument('year') ?: date('Y');
         $force = $this->option('force');
 
-        $this->components->info(sprintf("Preparing Advent of Code %s :: Day %s", $year, $day));
+        $this->components->info(sprintf('Preparing Advent of Code %s :: Day %s', $year, $day));
 
         $path = config('aochelper.solution.path');
         $namespace = Str::of($path)
@@ -28,15 +28,15 @@ class MakeSolutionCommand extends Command
         $filenamePart1 = sprintf('%s/Year_%s/Day%sPart1.php', $path, $year, $day);
         $filenamePart2 = sprintf('%s/Year_%s/Day%sPart2.php', $path, $year, $day);
 
-        if (File::exists($filenamePart1) && File::exists($filenamePart2) && !$force) {
-            $this->components->error("Solution files already exists.");
+        if (File::exists($filenamePart1) && File::exists($filenamePart2) && ! $force) {
+            $this->components->error('Solution files already exists.');
 
             return self::FAILURE;
         }
 
         $this->components->info('Preparing Puzzle file...');
 
-        $stub = Str::of(File::get(__DIR__ . '/../../stubs/Puzzle.stub'))
+        $stub = Str::of(File::get(__DIR__.'/../../stubs/Puzzle.stub'))
             ->replace('{ $namespace }', sprintf('%s\Year_%s', $namespace, $year))
             ->replace('{ $day }', $day)
             ->replace('{ $year }', $year);
