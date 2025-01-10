@@ -18,29 +18,31 @@ class FetchCommand extends Command
         $year = $this->argument('year') ?: date('Y');
 
         $inputPath = storage_path('aoc/input');
-        $inputFile = $inputPath . sprintf('/%d_%02d_input.txt', $year, $day);
+        $inputFile = $inputPath.sprintf('/%d_%02d_input.txt', $year, $day);
 
         if (File::exists($inputFile)) {
-            $this->components->warn(sprintf("Input file %s already exists.", $inputFile));
+            $this->components->warn(sprintf('Input file %s already exists.', $inputFile));
+
             return self::SUCCESS;
         }
 
         File::ensureDirectoryExists($inputPath);
 
         $inputRequest = Http::withCookies([
-            'session' => config('aochelper.session')
+            'session' => config('aochelper.session'),
         ], 'adventofcode.com')->withUserAgent(
-            "https://github.com/nbtshq/aochelper by contact@nbts.fi"
-        )->get(sprintf("https://adventofcode.com/%d/day/%d/input", $year, $day));
+            'https://github.com/nbtshq/aochelper by contact@nbts.fi'
+        )->get(sprintf('https://adventofcode.com/%d/day/%d/input', $year, $day));
 
         if ($inputRequest->failed()) {
-            $this->components->error("Could not read input from adventofcode.com");
+            $this->components->error('Could not read input from adventofcode.com');
+
             return self::FAILURE;
         }
 
         File::put($inputFile, rtrim($inputRequest->getBody()->getContents()));
 
-        $this->components->success(sprintf("Successfully saved input to %s", $inputFile));
+        $this->components->success(sprintf('Successfully saved input to %s', $inputFile));
 
         return self::SUCCESS;
     }
