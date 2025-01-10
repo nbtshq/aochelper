@@ -2,7 +2,7 @@
 
 namespace NorthernBytes\AocHelper;
 
-use NorthernBytes\AocHelper\Commands\AocHelperCommand;
+use NorthernBytes\AocHelper\Commands\FetchCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -18,6 +18,6 @@ class AocHelperServiceProvider extends PackageServiceProvider
         $package
             ->name('aochelper')
             ->hasConfigFile()
-            ->hasCommand(AocHelperCommand::class);
+            ->hasCommand(FetchCommand::class);
     }
 }
