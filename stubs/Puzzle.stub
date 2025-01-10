@@ -12,6 +12,8 @@ class Day{ $day }Part{ $part } extends Puzzle
 
     protected string $puzzleName = "{ $name }";
 
+    protected string $puzzleAnswerDescription = 'Answer';
+
     public function handle(): int
     {
         $this->components->info("No puzzle implementation.");
