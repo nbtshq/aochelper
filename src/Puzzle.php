@@ -75,17 +75,19 @@ abstract class Puzzle
     /**
      * Set the input data for the puzzle
      */
-    public function setPuzzleInput(string $input): void
+    public function setPuzzleInput(string $input): Puzzle
     {
         $this->puzzleInput = $input;
+        return $this;
     }
 
     /**
      * Set the answer for the puzzle
      */
-    protected function setPuzzleAnswer(string $answer): void
+    protected function setPuzzleAnswer(string $answer): Puzzle
     {
         $this->puzzleAnswer = $answer;
+        return $this;
     }
 
 }
