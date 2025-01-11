@@ -13,6 +13,8 @@ class Day{ $day }Part{ $part } extends Puzzle
     public function solve(): Puzzle
     {
         // This is where the actual puzzle solving logic goes
+        $this->info("I'm info output");
+        $this->debug("I'm debug output");
 
         // Remember to finish up by setting the puzzle answer
         $this->puzzleAnswer = 42;
