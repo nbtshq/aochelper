@@ -5,7 +5,6 @@ namespace NorthernBytes\AocHelper\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use NorthernBytes\AocHelper\Puzzle;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class RunCommand extends Command
 {
@@ -26,6 +25,7 @@ class RunCommand extends Command
         $className = sprintf('%s\\Year%s\\Day%sPart%s', $namespace, $year, $day, $part);
         if (! class_exists($className)) {
             $this->components->error("No task implementation found for year {$year} day {$day} part {$part}");
+
             return self::FAILURE;
         }
 
@@ -60,6 +60,7 @@ class RunCommand extends Command
 
         if ($error) {
             $this->warn('De fou feil me '.$solution->getPuzzleAnswer());
+
             return $error;
         }
 

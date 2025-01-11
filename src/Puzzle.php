@@ -10,7 +10,9 @@ abstract class Puzzle
 
     // see https://tldp.org/LDP/abs/html/exitcodes.html
     public const SUCCESS = 0;
+
     public const FAILURE = 1;
+
     public const INVALID = 2;
 
     /**
@@ -33,9 +35,11 @@ abstract class Puzzle
      */
     protected string $puzzleAnswerDescription = 'Answer';
 
-    function __construct(string $input = null)
+    public function __construct(?string $input = null)
     {
-        if (!is_null($input)) $this->setPuzzleInput($input);
+        if (! is_null($input)) {
+            $this->setPuzzleInput($input);
+        }
     }
 
     /**
@@ -83,6 +87,7 @@ abstract class Puzzle
     public function setPuzzleInput(string $input): Puzzle
     {
         $this->puzzleInput = $input;
+
         return $this;
     }
 
@@ -92,7 +97,7 @@ abstract class Puzzle
     protected function setPuzzleAnswer(string $answer): Puzzle
     {
         $this->puzzleAnswer = $answer;
+
         return $this;
     }
-
 }
