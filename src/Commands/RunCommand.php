@@ -60,7 +60,14 @@ class RunCommand extends Command
             $inputProvider = new PuzzleInputFileReader;
         }
 
-        $solution->setPuzzleInput(trim($inputProvider->getPuzzleInput((int) $year, (int) $day)));
+        $puzzleInput = trim($inputProvider->getPuzzleInput((int) $year, (int) $day));
+        if (empty($puzzleInput)) {
+            $this->components->error("No puzzle input available for year {$year} day {$day}");
+
+            return self::FAILURE;
+        }
+
+        $solution->setPuzzleInput($puzzleInput);
 
         // Run the actual solution
         $solution->solve();
