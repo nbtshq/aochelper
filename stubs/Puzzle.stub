@@ -12,8 +12,13 @@ class Day{ $day }Part{ $part } extends Puzzle
 
     public function solve(): int
     {
+        // This is where the actual puzzle solving logic goes
+
+        // Remember to finish up by setting the puzzle answer
         $this->puzzleAnswer = 42;
 
+        // When you are done, return something better:
+        // return self::SUCCESS;
         return self::FAILURE;
     }
 }
