@@ -2,10 +2,10 @@
 
 namespace NorthernBytes\AocHelper;
 
+use NorthernBytes\AocHelper\Commands\AocdConfigTestCommand;
 use NorthernBytes\AocHelper\Commands\FetchCommand;
 use NorthernBytes\AocHelper\Commands\MakeSolutionCommand;
 use NorthernBytes\AocHelper\Commands\RunCommand;
-use NorthernBytes\AocHelper\Commands\AocdConfigTestCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 

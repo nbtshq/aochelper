@@ -1,7 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace NorthernBytes\AocHelper\Support;
+
 use Illuminate\Support\Facades\File;
 
 class AocdWrapper
@@ -16,9 +18,9 @@ class AocdWrapper
      */
     private string $dataDirectory;
 
-    function __construct()
+    public function __construct()
     {
-        if (!config('aochelper.aocdwrapper.enable')) {
+        if (! config('aochelper.aocdwrapper.enable')) {
             // Nothing to do here, the wrapper is not enabled
             return;
         }
@@ -33,7 +35,7 @@ class AocdWrapper
      */
     private function discoverDataDirectory(): string
     {
-        if (!empty(config('aochelper.aocdwrapper.aocd_data_dir'))) {
+        if (! empty(config('aochelper.aocdwrapper.aocd_data_dir'))) {
             // aocd data directory manually defined in env
             $aocd_data_dir = config('aochelper.aocdwrapper.aocd_data_dir');
         } else {
@@ -44,14 +46,14 @@ class AocdWrapper
                 throw new \Exception("Expected aocd data directory not found at {$aocd_dir}");
             }
 
-            $token2id_path = $real_aocd_dir . '/token2id.json';
+            $token2id_path = $real_aocd_dir.'/token2id.json';
             $tokens = json_decode(File::get($token2id_path), true);
             $aoc_user_id = array_pop($tokens);
 
-            $aocd_data_dir = $real_aocd_dir . '/' . $aoc_user_id;
+            $aocd_data_dir = $real_aocd_dir.'/'.$aoc_user_id;
         }
 
-        if (!File::isDirectory($aocd_data_dir)) {
+        if (! File::isDirectory($aocd_data_dir)) {
             throw new \Exception("Expected data directory for AoC user not found at {$aocd_data_dir}");
         }
 
