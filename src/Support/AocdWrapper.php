@@ -14,6 +14,16 @@ class AocdWrapper
     private bool $enabled = false;
 
     /**
+     * The path to the aocd executable
+     */
+    private string $aocdPath;
+
+    /**
+     * The version number of the aocd executable used
+     */
+    private string $aocdVersion;
+
+    /**
      * The path to the aocd data directory
      */
     private string $dataDirectory;
@@ -25,15 +35,45 @@ class AocdWrapper
             return;
         }
 
-        $this->dataDirectory = $this->discoverDataDirectory();
+        $this->discoverAocdExecutable();
+        $this->discoverDataDirectory();
 
         $this->enabled = true;
     }
 
     /**
-     * Search for and return the path to the aocd data directory
+     * Search for aocd executable and setup necessary class variables
      */
-    private function discoverDataDirectory(): string
+    private function discoverAocdExecutable(): void
+    {
+        if (! empty(config('aochelper.aocdwrapper.aocd_path'))) {
+            // aocd path manually defined in env
+            $aocd_path = config('aochelper.aocdwrapper.aocd_path');
+        } else {
+            // Searching for aocd executable in PATH
+            exec('which aocd 2>/dev/null', $output, $return_var);
+            if ($return_var !== 0) {
+                throw new \Exception('aocd executable not found in PATH and not defined in AOCD_PATH');
+            }
+            $aocd_path = array_pop($output);
+        }
+        exec("{$aocd_path} --version 2>/dev/null", $output, $return_var);
+        if ($return_var !== 0) {
+            throw new \Exception("Could not get version of aocd executable at {$aocd_path}");
+        }
+
+        $aocd_version = array_pop($output);
+
+        $this->aocdPath = $aocd_path;
+        $this->aocdVersion = $aocd_version;
+
+        return;
+    }
+
+    /**
+     * Search for aocd data directory and setup necessary class variables
+     */
+    private function discoverDataDirectory(): void
     {
         if (! empty(config('aochelper.aocdwrapper.aocd_data_dir'))) {
             // aocd data directory manually defined in env
@@ -57,6 +97,8 @@ class AocdWrapper
             throw new \Exception("Expected data directory for AoC user not found at {$aocd_data_dir}");
         }
 
-        return $aocd_data_dir;
+        $this->dataDirectory = $aocd_data_dir;
+
+        return;
     }
 }
