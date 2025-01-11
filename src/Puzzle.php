@@ -15,7 +15,7 @@ abstract class Puzzle
 
     public const INVALID = 2;
 
-    protected string $puzzleName;
+    protected string $puzzleName = '';
 
     protected string $puzzleInput;
 
