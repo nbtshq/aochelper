@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use NorthernBytes\AocHelper\Interfaces\PuzzleInputProviderInterface;
 use NorthernBytes\AocHelper\Puzzle;
 use NorthernBytes\AocHelper\PuzzleInputFileReader;
 use NorthernBytes\AocHelper\Support\AocdWrapper;
@@ -59,7 +60,7 @@ class RunCommand extends Command
             $inputProvider = new PuzzleInputFileReader;
         }
 
-        $solution->setPuzzleInput(trim($inputProvider->getPuzzleInput($year, $day)));
+        $solution->setPuzzleInput(trim($inputProvider->getPuzzleInput((int) $year, (int) $day)));
 
         // Run the actual solution
         $solution->solve();
