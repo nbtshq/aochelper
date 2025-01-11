@@ -86,11 +86,11 @@ class AocdWrapper implements PuzzleInputProviderInterface
                 throw new \Exception("Expected aocd data directory not found at {$aocd_dir}");
             }
 
-            $token2id_path = $real_aocd_dir.'/token2id.json';
+            $token2id_path = $real_aocd_dir . '/token2id.json';
             $tokens = json_decode(File::get($token2id_path), true);
             $aoc_user_id = array_pop($tokens);
 
-            $aocd_data_dir = $real_aocd_dir.'/'.$aoc_user_id;
+            $aocd_data_dir = $real_aocd_dir . '/' . $aoc_user_id;
         }
 
         if (! File::isDirectory($aocd_data_dir)) {

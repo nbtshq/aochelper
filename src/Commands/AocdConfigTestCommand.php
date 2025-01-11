@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NorthernBytes\AocHelper\Commands;
 
 use Illuminate\Support\Facades\File;
@@ -116,10 +118,10 @@ class AocdConfigTestCommand extends Command
 
                 return self::FAILURE;
             }
-            $token2id_path = $real_aocd_dir.'/token2id.json';
+            $token2id_path = $real_aocd_dir . '/token2id.json';
             $tokens = json_decode(File::get($token2id_path), true);
             $aoc_user_id = array_pop($tokens);
-            $aocd_data_dir = $real_aocd_dir.'/'.$aoc_user_id;
+            $aocd_data_dir = $real_aocd_dir . '/' . $aoc_user_id;
             if (! File::isDirectory($aocd_data_dir)) {
                 $this->error("Expected data directory for AoC user not found at {$aocd_data_dir}");
 
