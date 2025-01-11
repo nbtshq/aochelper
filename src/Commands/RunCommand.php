@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use NorthernBytes\AocHelper\Interfaces\PuzzleAnswerProviderInterface;
 use NorthernBytes\AocHelper\Interfaces\PuzzleInputProviderInterface;
 use NorthernBytes\AocHelper\Puzzle;
 use NorthernBytes\AocHelper\PuzzleInputFileReader;
@@ -82,19 +83,30 @@ class RunCommand extends Command
 
         $this->newLine();
 
-        // Check the result against answer file, if one exists
-        /*
-        $answerFile = base_path("/answers/{$year}/d{$day}p{$part}.data");
-        if (File::exists($answerFile)) {
-            $storedAnswer = trim(File::get($answerFile));
-            if ($storedAnswer == $answer) {
-                $this->comment("Answer matches stored answer file.");
-            } else {
-                $this->error("Answer differs from stored answer file: {$storedAnswer}");
-            }
+        // Check the answer against previously stored answer, if one exists
+
+        /** @var ?PuzzleAnswerProviderInterface $answerProvider */
+        $answerProvider = null;
+
+        // TODO: This is a poc, should really happen somewhere else
+        if (config('aochelper.aocdwrapper.enable')) {
+            $answerProvider = new AocdWrapper;
+        } else {
+            // TODO: provide other options for getting stored answers
         }
-        $this->newLine();
-        */
+
+        $storedAnswer = '';
+        if (! is_null($answerProvider)) {
+            $storedAnswer = trim($answerProvider->getPuzzleAnswer((int) $year, (int) $day, (int) $part));
+        }
+        if (! empty($storedAnswer)) {
+            if ($storedAnswer == $answer) {
+                $this->comment('Answer matches previously stored answer.');
+            } else {
+                $this->error("Answer differs from previously stored answer: {$storedAnswer}");
+            }
+            $this->newLine();
+        }
 
         // Print the duration
         $duration = now()->diff(Carbon::createFromTimestamp(LARAVEL_START))->forHumans(['minimumUnit' => 'ms', 'short' => true, 'parts' => 2]);
