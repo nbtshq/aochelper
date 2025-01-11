@@ -1,0 +1,11 @@
+{
+    "preset": "laravel",
+    "rules": {
+        "explicit_string_variable": true,
+        "declare_parentheses": true,
+        "declare_strict_types": true,
+        "concat_space": {
+            "spacing": "one"
+        }
+    }
+}

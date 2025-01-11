@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NorthernBytes\AocHelper\Commands;
 
 use Illuminate\Console\Command;
@@ -19,7 +21,7 @@ class FetchCommand extends Command
         $force = $this->option('force');
 
         $inputPath = storage_path('aoc/input');
-        $inputFile = $inputPath.sprintf('/%d_%02d_input.txt', $year, $day);
+        $inputFile = $inputPath . sprintf('/%d_%02d_input.txt', $year, $day);
 
         if (File::exists($inputFile) && ! $force) {
             $this->components->warn(sprintf('Input file %s already exists.', $inputFile));

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NorthernBytes\AocHelper\Support;
 
 use Illuminate\Http\Client\PendingRequest;

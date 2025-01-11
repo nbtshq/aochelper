@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NorthernBytes\AocHelper\Commands;
 
 use Illuminate\Console\Command;
@@ -52,7 +54,7 @@ class MakeSolutionCommand extends Command
         $name = preg_replace('/^--- Day \d+: /', '', $name);
         $name = preg_replace('/ ---$/', '', $name);
 
-        $stub = Str::of(File::get(__DIR__.'/../../stubs/Puzzle.stub'))
+        $stub = Str::of(File::get(__DIR__ . '/../../stubs/Puzzle.stub'))
             ->replace('{ $namespace }', sprintf('%s\Year%s', $namespace, $year))
             ->replace('{ $day }', $day)
             ->replace('{ $year }', $year)
@@ -71,7 +73,7 @@ class MakeSolutionCommand extends Command
     public function saveSolution(string $filename, string $part, Stringable $stub, bool $force): void
     {
         if (File::missing(base_path($filename)) || $force) {
-            $this->components->info("Creating Part $part...", OutputInterface::VERBOSITY_VERBOSE);
+            $this->components->info("Creating Part {$part}...", OutputInterface::VERBOSITY_VERBOSE);
 
             File::put(
                 base_path($filename),

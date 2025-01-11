@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NorthernBytes\AocHelper\Facades;
 
 use Illuminate\Support\Facades\Facade;

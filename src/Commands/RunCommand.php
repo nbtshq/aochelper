@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NorthernBytes\AocHelper\Commands;
 
 use Carbon\Carbon;
@@ -100,7 +102,7 @@ class RunCommand extends Command
         $length = strlen($puzzleBanner) + 12;
 
         $this->info(str_repeat('*', $length));
-        $this->info('*     '.$puzzleBanner.'     *');
+        $this->info('*     ' . $puzzleBanner . '     *');
         $this->info(str_repeat('*', $length));
         $this->newLine();
     }

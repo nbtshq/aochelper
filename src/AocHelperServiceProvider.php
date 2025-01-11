@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NorthernBytes\AocHelper;
 
 use NorthernBytes\AocHelper\Commands\AocdConfigTestCommand;
