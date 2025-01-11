@@ -8,7 +8,7 @@ use NorthernBytes\AocHelper\Support\Aoc;
 
 class FetchCommand extends Command
 {
-    public $signature = 'aoc:fetch { day } { year? }';
+    public $signature = 'aoc:fetch { day } { year? } { --force }';
 
     public $description = 'Fetch AoC input data for specified day';
 
@@ -16,11 +16,12 @@ class FetchCommand extends Command
     {
         $day = $this->argument('day');
         $year = $this->argument('year') ?: date('Y');
+        $force = $this->option('force');
 
         $inputPath = storage_path('aoc/input');
         $inputFile = $inputPath.sprintf('/%d_%02d_input.txt', $year, $day);
 
-        if (File::exists($inputFile)) {
+        if (File::exists($inputFile) && ! $force) {
             $this->components->warn(sprintf('Input file %s already exists.', $inputFile));
 
             return self::SUCCESS;
