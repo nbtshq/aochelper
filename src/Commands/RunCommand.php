@@ -2,9 +2,12 @@
 
 namespace NorthernBytes\AocHelper\Commands;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use NorthernBytes\AocHelper\Puzzle;
+
+use function Termwind\render;
 
 class RunCommand extends Command
 {
@@ -67,6 +70,7 @@ class RunCommand extends Command
         // Print the answer from the solution
         $answerDescription = $solution->getPuzzleAnswerDescription();
         $answer = $solution->getPuzzleAnswer();
+
         render(<<<HTML
             <div><i>{$answerDescription}:</i> <b><u>{$answer}</u></b></div>
         HTML);
