@@ -6,20 +6,14 @@ use NorthernBytes\AocHelper\Puzzle;
 
 class Day{ $day }Part{ $part } extends Puzzle
 {
-    protected int $puzzleDay = { $day };
-
-    protected int $puzzleYear = { $year };
-
     protected string $puzzleName = "{ $name }";
 
     protected string $puzzleAnswerDescription = 'Answer';
 
-    public function handle(): int
+    public function solve(): int
     {
-        $this->components->info("No puzzle implementation.");
+        $this->puzzleAnswer = 42;
 
-        $this->setPuzzleAnswer(42);
-
-        return self::SUCCESS;
+        return self::FAILURE;
     }
 }

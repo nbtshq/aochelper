@@ -30,8 +30,8 @@ class MakeSolutionCommand extends Command
             ->replace('/', '\\')
             ->ucfirst();
 
-        $filenamePart1 = sprintf('%s/Year_%s/Day%sPart1.php', $path, $year, $day);
-        $filenamePart2 = sprintf('%s/Year_%s/Day%sPart2.php', $path, $year, $day);
+        $filenamePart1 = sprintf('%s/Year%s/Day%sPart1.php', $path, $year, $day);
+        $filenamePart2 = sprintf('%s/Year%s/Day%sPart2.php', $path, $year, $day);
 
         if (File::exists($filenamePart1) && File::exists($filenamePart2) && ! $force) {
             $this->components->error('Solution files already exists.');
@@ -47,14 +47,17 @@ class MakeSolutionCommand extends Command
 
         $name = substr($puzzle, stripos($puzzle, '<article class="day-desc">') + 30, -1);
         $name = substr($name, 0, stripos($name, '</h2>'));
-        $name = Str::of($name)->replace('-', '');
+
+        $name = preg_replace('/^--- Day \d+: /', '', $name);
+        $name = preg_replace('/ ---$/', '', $name);
 
         $stub = Str::of(File::get(__DIR__.'/../../stubs/Puzzle.stub'))
-            ->replace('{ $namespace }', sprintf('%s\Year_%s', $namespace, $year))
+            ->replace('{ $namespace }', sprintf('%s\Year%s', $namespace, $year))
             ->replace('{ $day }', $day)
-            ->replace('{ $year }', $year);
+            ->replace('{ $year }', $year)
+            ->replace('{ $name }', $name);
 
-        File::ensureDirectoryExists(base_path(sprintf('%s/Year_%s', $path, $year)));
+        File::ensureDirectoryExists(base_path(sprintf('%s/Year%s', $path, $year)));
 
         if (File::missing(base_path($filenamePart1)) || $force) {
             $this->components->info('Creating Part 1...', OutputInterface::VERBOSITY_VERBOSE);
@@ -63,7 +66,6 @@ class MakeSolutionCommand extends Command
                 base_path($filenamePart1),
                 Str::of($stub)
                     ->replace('{ $part }', '1')
-                    ->replace('{ $name }', $name.':: Part 1')
             );
         }
 
@@ -74,7 +76,6 @@ class MakeSolutionCommand extends Command
                 base_path($filenamePart2),
                 Str::of($stub)
                     ->replace('{ $part }', '2')
-                    ->replace('{ $name }', $name.':: Part 2')
             );
         }
 

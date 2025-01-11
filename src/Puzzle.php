@@ -2,13 +2,16 @@
 
 namespace NorthernBytes\AocHelper;
 
-use Illuminate\Console\Command;
+use Illuminate\Console\Concerns;
 
-abstract class Puzzle extends Command
+abstract class Puzzle
 {
-    protected int $puzzleDay;
+    use Concerns\InteractsWithIO;
 
-    protected int $puzzleYear;
+    // see https://tldp.org/LDP/abs/html/exitcodes.html
+    public const SUCCESS = 0;
+    public const FAILURE = 1;
+    public const INVALID = 2;
 
     protected string $puzzleName;
 
@@ -18,10 +21,7 @@ abstract class Puzzle extends Command
 
     protected string $puzzleAnswerDescription = 'Answer';
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    public abstract function solve(): int;
 
     public function setPuzzleInput(string $input): void
     {
@@ -31,5 +31,15 @@ abstract class Puzzle extends Command
     protected function setPuzzleAnswer(string $answer): void
     {
         $this->puzzleAnswer = $answer;
+    }
+
+    public function getPuzzleName(): string
+    {
+        return $this->puzzleName;
+    }
+
+    public function getPuzzleAnswer(): string
+    {
+        return $this->puzzleAnswer;
     }
 }
