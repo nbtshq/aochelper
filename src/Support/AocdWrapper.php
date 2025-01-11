@@ -21,11 +21,6 @@ class AocdWrapper implements PuzzleAnswerProviderInterface, PuzzleInputProviderI
     private string $aocdPath;
 
     /**
-     * The version number of the aocd executable used
-     */
-    private string $aocdVersion;
-
-    /**
      * The path to the aocd data directory
      */
     private string $dataDirectory;
@@ -64,11 +59,10 @@ class AocdWrapper implements PuzzleAnswerProviderInterface, PuzzleInputProviderI
             throw new \Exception("Could not get version of aocd executable at {$aocd_path}");
         }
 
+        // If this is ever useful, we could put it somewhere...
         $aocd_version = array_pop($output);
 
         $this->aocdPath = $aocd_path;
-        $this->aocdVersion = $aocd_version;
-
     }
 
     /**
@@ -99,7 +93,6 @@ class AocdWrapper implements PuzzleAnswerProviderInterface, PuzzleInputProviderI
         }
 
         $this->dataDirectory = $aocd_data_dir;
-
     }
 
     public function getPuzzleAnswer(int $year, int $day, int $part): string
