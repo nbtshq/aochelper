@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace NorthernBytes\AocHelper\Support;
 
 use Illuminate\Support\Facades\File;
+use NorthernBytes\AocHelper\Interfaces\PuzzleAnswerProviderInterface;
 use NorthernBytes\AocHelper\Interfaces\PuzzleInputProviderInterface;
 
-class AocdWrapper implements PuzzleInputProviderInterface
+class AocdWrapper implements PuzzleAnswerProviderInterface, PuzzleInputProviderInterface
 {
     /**
      * Status of the wrapper. Wrapper will return only empty strings if this is set to false.
@@ -99,6 +100,34 @@ class AocdWrapper implements PuzzleInputProviderInterface
 
         $this->dataDirectory = $aocd_data_dir;
 
+    }
+
+    public function getPuzzleAnswer(int $year, int $day, int $part): string
+    {
+        if (! $this->enabled) {
+            return '';
+        }
+
+        // Calling aocd with the -e flag ensures that examples and answers (if any) are saved
+        exec("{$this->aocdPath} {$day} {$year} -e >/dev/null 2>/dev/null", $output, $return_var);
+
+        if ($return_var !== 0) {
+            throw new \Exception("aocd exited with non-zero status {$return_var}");
+        }
+
+        $answerFile = sprintf(
+            '%s/%d_%02d%s_answer.txt',
+            $this->dataDirectory,
+            $year,
+            $day,
+            ($part == 1) ? 'a' : 'b',
+        );
+
+        if (File::exists($answerFile)) {
+            return File::get($answerFile);
+        }
+
+        return '';
     }
 
     public function getPuzzleInput(int $year, int $day): string
