@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace NorthernBytes\AocHelper\Commands;
 
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use LaravelZero\Framework\Commands\Command;
 
 class AocdConfigTestCommand extends Command
 {
