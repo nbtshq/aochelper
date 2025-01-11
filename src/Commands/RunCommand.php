@@ -7,6 +7,8 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use NorthernBytes\AocHelper\Puzzle;
+use NorthernBytes\AocHelper\PuzzleInputFileReader;
+use NorthernBytes\AocHelper\Support\AocdWrapper;
 
 use function Termwind\render;
 
@@ -44,16 +46,18 @@ class RunCommand extends Command
         $this->announcePuzzle($year, $day, $part, $solution->getPuzzleName());
 
         // Read puzzle input from file
-        $puzzleInputFile = sprintf(
-            '%s/%d_%02d_input.txt',
-            storage_path('aoc/input'),
-            $year,
-            $day
-        );
 
-        if (File::exists($puzzleInputFile)) {
-            $solution->setPuzzleInput(trim(File::get($puzzleInputFile)));
+        /** @var PuzzleInputProviderInterface $inputProvider */
+        $inputProvider = null;
+
+        // TODO: This is a poc, should really happen somewhere else
+        if (config('aochelper.aocdwrapper.enable')) {
+            $inputProvider = new AocdWrapper();
+        } else {
+            $inputProvider = new PuzzleInputFileReader();
         }
+
+        $solution->setPuzzleInput(trim($inputProvider->getPuzzleInput($year, $day)));
 
         // Run the actual solution
         $solution->solve();
