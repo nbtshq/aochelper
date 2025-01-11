@@ -33,6 +33,11 @@ abstract class Puzzle
      */
     protected string $puzzleAnswerDescription = 'Answer';
 
+    function __construct(string $input = null)
+    {
+        if (!is_null($input)) $this->setPuzzleInput($input);
+    }
+
     /**
      * Solve the puzzle.
      *
