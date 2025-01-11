@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use NorthernBytes\AocHelper\Support\Aoc;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class MakeSolutionCommand extends Command
 {
@@ -19,7 +20,10 @@ class MakeSolutionCommand extends Command
         $year = $this->argument('year') ?: date('Y');
         $force = $this->option('force');
 
-        $this->components->info(sprintf('Preparing Advent of Code %s :: Day %s', $year, $day));
+        $this->components->info(
+            sprintf('Preparing Advent of Code %s :: Day %s', $year, $day),
+            OutputInterface::VERBOSITY_VERBOSE
+        );
 
         $path = config('aochelper.solution.path');
         $namespace = Str::of($path)
@@ -35,7 +39,7 @@ class MakeSolutionCommand extends Command
             return self::FAILURE;
         }
 
-        $this->components->info('Preparing Puzzle file...');
+        $this->components->info('Fetching Puzzle name...', OutputInterface::VERBOSITY_VERBOSE);
 
         $puzzle = Aoc::getClient()
             ->get(sprintf('https://adventofcode.com/%d/day/%d', $year, $day))
@@ -53,7 +57,7 @@ class MakeSolutionCommand extends Command
         File::ensureDirectoryExists(base_path(sprintf('%s/Year_%s', $path, $year)));
 
         if (File::missing(base_path($filenamePart1)) || $force) {
-            $this->components->info('Creating Part 1...');
+            $this->components->info('Creating Part 1...', OutputInterface::VERBOSITY_VERBOSE);
 
             File::put(
                 base_path($filenamePart1),
@@ -64,7 +68,7 @@ class MakeSolutionCommand extends Command
         }
 
         if (File::missing(base_path($filenamePart2)) || $force) {
-            $this->components->info('Creating Part 2...');
+            $this->components->info('Creating Part 2...', OutputInterface::VERBOSITY_VERBOSE);
 
             File::put(
                 base_path($filenamePart2),
