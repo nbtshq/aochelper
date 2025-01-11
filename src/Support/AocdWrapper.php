@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace NorthernBytes\AocHelper\Support;
 
 use Illuminate\Support\Facades\File;
+use NorthernBytes\AocHelper\Interfaces\PuzzleInputProviderInterface;
 
-class AocdWrapper
+class AocdWrapper implements PuzzleInputProviderInterface
 {
     /**
      * Status of the wrapper. Wrapper will return only empty strings if this is set to false.
@@ -100,5 +101,10 @@ class AocdWrapper
         $this->dataDirectory = $aocd_data_dir;
 
         return;
+    }
+
+    public function getPuzzleInput(int $year, int $day): string
+    {
+        return '';
     }
 }
