@@ -2,11 +2,11 @@
 
 namespace NorthernBytes\AocHelper;
 
-use Illuminate\Console\Concerns;
+use Illuminate\Console\Concerns\InteractsWithIO;
 
 abstract class Puzzle
 {
-    use Concerns\InteractsWithIO;
+    use InteractsWithIO;
 
     // see https://tldp.org/LDP/abs/html/exitcodes.html
     public const SUCCESS = 0;
