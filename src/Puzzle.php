@@ -3,6 +3,7 @@
 namespace NorthernBytes\AocHelper;
 
 use Illuminate\Console\Concerns\InteractsWithIO;
+use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class Puzzle
 {
@@ -47,7 +48,7 @@ abstract class Puzzle
      *
      * This is where the actual puzzle solving logic goes.
      */
-    abstract public function solve(): int;
+    abstract public function solve(): Puzzle;
 
     /**
      * Get the name of the puzzle for the day, as given by AoC.
@@ -99,5 +100,10 @@ abstract class Puzzle
         $this->puzzleAnswer = $answer;
 
         return $this;
+    }
+
+    public function debug(string $message): void
+    {
+        $this->output->writeln($message, OutputInterface::VERBOSITY_VERBOSE);
     }
 }

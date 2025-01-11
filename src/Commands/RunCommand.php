@@ -4,6 +4,7 @@ namespace NorthernBytes\AocHelper\Commands;
 
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use NorthernBytes\AocHelper\Puzzle;
 
@@ -40,32 +41,22 @@ class RunCommand extends Command
         $solution->setInput($this->input);
 
         // Print puzzle banner
-        $puzzleName = $solution->getPuzzleName();
-        $partAsText = ($part == 1) ? 'One' : 'Two';
-        $puzzleBanner = "AoC {$year} - Day {$day}: {$puzzleName} - Part {$partAsText}";
-        $length = strlen($puzzleBanner) + 12;
-
-        $this->info(str_repeat('*', $length));
-        $this->info('*     '.$puzzleBanner.'     *');
-        $this->info(str_repeat('*', $length));
-        $this->newLine();
+        $this->announcePuzzle($year, $day, $part, $solution->getPuzzleName());
 
         // Read puzzle input from file
-        /*
-        $puzzleInputFile = base_path("/input/{$year}/d{$day}.data");
-        $puzzleInput = trim(File::get($puzzleInputFile));
-        */
-        $puzzleInput = '';
-        $solution->setPuzzleInput($puzzleInput);
+        $puzzleInputFile = sprintf(
+            '%s/%d_%02d_input.txt',
+            storage_path('aoc/input'),
+            $year,
+            $day
+        );
+
+        if (File::exists($puzzleInputFile)) {
+            $solution->setPuzzleInput(trim(File::get($puzzleInputFile)));
+        }
 
         // Run the actual solution
-        $error = $solution->solve();
-
-        if ($error) {
-            $this->warn('De fou feil me '.$solution->getPuzzleAnswer());
-
-            return $error;
-        }
+        $solution->solve();
 
         // Print the answer from the solution
         $answerDescription = $solution->getPuzzleAnswerDescription();
@@ -74,6 +65,8 @@ class RunCommand extends Command
         render(<<<HTML
             <div><i>{$answerDescription}:</i> <b><u>{$answer}</u></b></div>
         HTML);
+
+        $this->newLine();
 
         // Check the result against answer file, if one exists
         /*
@@ -94,5 +87,17 @@ class RunCommand extends Command
         $this->comment("Duration: {$duration}");
 
         return self::SUCCESS;
+    }
+
+    public function announcePuzzle(string $year, string $day, string $part, string $puzzleName): void
+    {
+        $partAsText = ($part == 1) ? 'One' : 'Two';
+        $puzzleBanner = "AoC {$year} - Day {$day}: {$puzzleName} - Part {$partAsText}";
+        $length = strlen($puzzleBanner) + 12;
+
+        $this->info(str_repeat('*', $length));
+        $this->info('*     '.$puzzleBanner.'     *');
+        $this->info(str_repeat('*', $length));
+        $this->newLine();
     }
 }

@@ -5,6 +5,7 @@ namespace NorthernBytes\AocHelper\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Support\Stringable;
 use NorthernBytes\AocHelper\Support\Aoc;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -59,28 +60,24 @@ class MakeSolutionCommand extends Command
 
         File::ensureDirectoryExists(base_path(sprintf('%s/Year%s', $path, $year)));
 
-        if (File::missing(base_path($filenamePart1)) || $force) {
-            $this->components->info('Creating Part 1...', OutputInterface::VERBOSITY_VERBOSE);
-
-            File::put(
-                base_path($filenamePart1),
-                Str::of($stub)
-                    ->replace('{ $part }', '1')
-            );
-        }
-
-        if (File::missing(base_path($filenamePart2)) || $force) {
-            $this->components->info('Creating Part 2...', OutputInterface::VERBOSITY_VERBOSE);
-
-            File::put(
-                base_path($filenamePart2),
-                Str::of($stub)
-                    ->replace('{ $part }', '2')
-            );
-        }
+        $this->saveSolution($filenamePart1, '1', $stub, $force);
+        $this->saveSolution($filenamePart2, '2', $stub, $force);
 
         $this->components->success('Solution files created.');
 
         return self::SUCCESS;
+    }
+
+    public function saveSolution(string $filename, string $part, Stringable $stub, bool $force): void
+    {
+        if (File::missing(base_path($filename)) || $force) {
+            $this->components->info("Creating Part $part...", OutputInterface::VERBOSITY_VERBOSE);
+
+            File::put(
+                base_path($filename),
+                Str::of($stub)
+                    ->replace('{ $part }', $part)
+            );
+        }
     }
 }
