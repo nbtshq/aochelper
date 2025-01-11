@@ -43,6 +43,14 @@ abstract class Puzzle
         if (! is_null($input)) {
             $this->setPuzzleInput($input);
         }
+
+        // This is needed when running tests against solutions, i.e. without actual console I/O
+        $this->setOutput(
+            new \Illuminate\Console\OutputStyle(
+                new \Symfony\Component\Console\Input\StringInput(''),
+                new \Symfony\Component\Console\Output\NullOutput
+            )
+        );
     }
 
     /**
