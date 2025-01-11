@@ -5,6 +5,7 @@ namespace NorthernBytes\AocHelper;
 use NorthernBytes\AocHelper\Commands\FetchCommand;
 use NorthernBytes\AocHelper\Commands\MakeSolutionCommand;
 use NorthernBytes\AocHelper\Commands\RunCommand;
+use NorthernBytes\AocHelper\Commands\AocdConfigTestCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -22,6 +23,7 @@ class AocHelperServiceProvider extends PackageServiceProvider
             ->hasConfigFile()
             ->hasCommand(MakeSolutionCommand::class)
             ->hasCommand(FetchCommand::class)
-            ->hasCommand(RunCommand::class);
+            ->hasCommand(RunCommand::class)
+            ->hasCommand(AocdConfigTestCommand::class);
     }
 }
