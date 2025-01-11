@@ -105,6 +105,14 @@ class AocdWrapper implements PuzzleInputProviderInterface
 
     public function getPuzzleInput(int $year, int $day): string
     {
-        return '';
+        if (! $this->enabled) return '';
+
+        exec("{$this->aocdPath} {$day} {$year} 2>/dev/null", $output, $return_var);
+
+        if ($return_var !== 0) {
+            throw new \Exception("aocd exited with non-zero status {$return_var}");
+        }
+
+        return implode("\n", $output);
     }
 }
