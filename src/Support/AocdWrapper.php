@@ -68,7 +68,6 @@ class AocdWrapper implements PuzzleInputProviderInterface
         $this->aocdPath = $aocd_path;
         $this->aocdVersion = $aocd_version;
 
-        return;
     }
 
     /**
@@ -100,12 +99,13 @@ class AocdWrapper implements PuzzleInputProviderInterface
 
         $this->dataDirectory = $aocd_data_dir;
 
-        return;
     }
 
     public function getPuzzleInput(int $year, int $day): string
     {
-        if (! $this->enabled) return '';
+        if (! $this->enabled) {
+            return '';
+        }
 
         exec("{$this->aocdPath} {$day} {$year} 2>/dev/null", $output, $return_var);
 

@@ -52,9 +52,9 @@ class RunCommand extends Command
 
         // TODO: This is a poc, should really happen somewhere else
         if (config('aochelper.aocdwrapper.enable')) {
-            $inputProvider = new AocdWrapper();
+            $inputProvider = new AocdWrapper;
         } else {
-            $inputProvider = new PuzzleInputFileReader();
+            $inputProvider = new PuzzleInputFileReader;
         }
 
         $solution->setPuzzleInput(trim($inputProvider->getPuzzleInput($year, $day)));
