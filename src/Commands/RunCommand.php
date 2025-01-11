@@ -5,7 +5,6 @@ namespace NorthernBytes\AocHelper\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use NorthernBytes\AocHelper\Puzzle;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class RunCommand extends Command
@@ -50,9 +49,9 @@ class RunCommand extends Command
         $error = $solution->solve();
 
         if ($error) {
-            $this->warn('De fou feil me ' . $solution->getPuzzleAnswer());
+            $this->warn('De fou feil me '.$solution->getPuzzleAnswer());
         } else {
-            $this->info($solution->getPuzzleAnswer() . ' va rätt svar');
+            $this->info($solution->getPuzzleAnswer().' va rätt svar');
         }
 
         return self::SUCCESS;

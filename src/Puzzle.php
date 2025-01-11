@@ -10,7 +10,9 @@ abstract class Puzzle
 
     // see https://tldp.org/LDP/abs/html/exitcodes.html
     public const SUCCESS = 0;
+
     public const FAILURE = 1;
+
     public const INVALID = 2;
 
     protected string $puzzleName;
@@ -21,7 +23,7 @@ abstract class Puzzle
 
     protected string $puzzleAnswerDescription = 'Answer';
 
-    public abstract function solve(): int;
+    abstract public function solve(): int;
 
     public function setPuzzleInput(string $input): void
     {
