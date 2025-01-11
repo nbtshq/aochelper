@@ -77,6 +77,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 ## Credits
 
 - [Conny Sjöblom](https://github.com/ConnySjoblom)
+- [Tony Karlsson](https://github.com/The-Sorce)
 - [All Contributors](../../contributors)
 
 ## License
