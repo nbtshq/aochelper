@@ -47,7 +47,7 @@ class Input
         }
     }
 
-    private static function validateDay($day): void
+    private static function validateDay(mixed $day): void
     {
         if ($day < 1 || $day > 25) {
             throw ValidationException::withMessages([

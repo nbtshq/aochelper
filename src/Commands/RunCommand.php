@@ -31,8 +31,6 @@ class RunCommand extends Command
             $this->argument('part')
         );
 
-        dd($year, $day, $part);
-
         // Instantiate a class for the correct puzzle
         $namespace = Str::of(config('aochelper.solution.path'))
             ->replace('/', '\\')
