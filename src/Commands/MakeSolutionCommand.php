@@ -62,15 +62,15 @@ class MakeSolutionCommand extends Command
 
         File::ensureDirectoryExists(base_path(sprintf('%s/Year%s', $path, $year)));
 
-        $this->saveSolution($filenamePart1, '1', $stub, $force);
-        $this->saveSolution($filenamePart2, '2', $stub, $force);
+        $this->saveSolution($filenamePart1, '1', $stub->toString(), $force);
+        $this->saveSolution($filenamePart2, '2', $stub->toString(), $force);
 
         $this->components->success('Solution files created.');
 
         return self::SUCCESS;
     }
 
-    public function saveSolution(string $filename, string $part, Stringable $stub, bool $force): void
+    public function saveSolution(string $filename, string $part, string $stub, bool $force): void
     {
         if (File::missing(base_path($filename)) || $force) {
             $this->components->info("Creating Part {$part}...", OutputInterface::VERBOSITY_VERBOSE);
@@ -79,6 +79,7 @@ class MakeSolutionCommand extends Command
                 base_path($filename),
                 Str::of($stub)
                     ->replace('{ $part }', $part)
+                    ->toString()
             );
         }
     }
