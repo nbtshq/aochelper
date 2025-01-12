@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) NorthernBytes <conny.sjoblom@nbts.fi>
+Copyright (c) NorthernBytes <contact@nbts.fi>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
