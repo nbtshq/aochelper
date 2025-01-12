@@ -73,7 +73,9 @@ class RunCommand extends Command
         $solution->setPuzzleInput($puzzleInput);
 
         // Run the actual solution
+        $solvingStart = now();
         $solution->solve();
+        $solvingDuration = now()->diff($solvingStart)->forHumans(['minimumUnit' => 'µs', 'short' => true, 'parts' => 2, 'join' => '']);
 
         // Print the answer from the solution
         $answerDescription = $solution->getPuzzleAnswerDescription();
@@ -111,8 +113,8 @@ class RunCommand extends Command
         }
 
         // Print the duration
-        $duration = now()->diff(Carbon::createFromTimestamp(LARAVEL_START))->forHumans(['minimumUnit' => 'ms', 'short' => true, 'parts' => 2]);
-        $this->comment("Duration: {$duration}");
+        $totalDuration = now()->diff(Carbon::createFromTimestamp(LARAVEL_START))->forHumans(['minimumUnit' => 'ms', 'short' => true, 'parts' => 2, 'join' => '']);
+        $this->comment("Duration: {$solvingDuration} solving, {$totalDuration} total");
 
         return self::SUCCESS;
     }
