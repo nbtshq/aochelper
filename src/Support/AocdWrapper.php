@@ -114,6 +114,8 @@ class AocdWrapper implements PuzzleAnswerProviderInterface, PuzzleInputProviderI
             return File::get($answerFile);
         }
 
+        // TODO: Here we need to throttle, to avoid hitting AoC servers on every run of not yet solved puzzles!
+
         // Calling aocd with the -e flag ensures that examples and answers (if any) are downloaded
         exec("{$this->aocdPath} {$day} {$year} -e >/dev/null 2>/dev/null", $output, $return_var);
 
