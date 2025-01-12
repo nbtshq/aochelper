@@ -6,12 +6,12 @@ namespace NorthernBytes\AocHelper\Commands;
 
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use NorthernBytes\AocHelper\Interfaces\PuzzleAnswerProviderInterface;
 use NorthernBytes\AocHelper\Interfaces\PuzzleInputProviderInterface;
 use NorthernBytes\AocHelper\Puzzle;
 use NorthernBytes\AocHelper\PuzzleInputFileReader;
+use NorthernBytes\AocHelper\StdinReader;
 use NorthernBytes\AocHelper\Support\AocdWrapper;
 
 use function Termwind\render;
@@ -49,13 +49,15 @@ class RunCommand extends Command
         // Print puzzle banner
         $this->announcePuzzle($year, $day, $part, $solution->getPuzzleName());
 
-        // Read puzzle input from file
+        // Read puzzle input
 
         /** @var PuzzleInputProviderInterface $inputProvider */
         $inputProvider = null;
 
         // TODO: This is a poc, should really happen somewhere else
-        if (config('aochelper.aocdwrapper.enable')) {
+        if (StdinReader::inputAvailable()) {
+            $inputProvider = new StdinReader;
+        } elseif (config('aochelper.aocdwrapper.enable')) {
             $inputProvider = new AocdWrapper;
         } else {
             $inputProvider = new PuzzleInputFileReader;
