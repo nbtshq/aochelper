@@ -1,11 +1,7 @@
 {
     "name": "nbtshq/aochelper",
     "description": "Advent of Code Helper",
-    "keywords": [
-        "NorthernBytes",
-        "laravel",
-        "aochelper"
-    ],
+    "keywords": ["aoc", "aochelper", "puzzle", "console", "cli", "laravel"],
     "homepage": "https://github.com/nbtshq/aochelper",
     "license": "MIT",
     "authors": [
