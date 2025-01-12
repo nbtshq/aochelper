@@ -101,13 +101,6 @@ class AocdWrapper implements PuzzleAnswerProviderInterface, PuzzleInputProviderI
             return '';
         }
 
-        // Calling aocd with the -e flag ensures that examples and answers (if any) are saved
-        exec("{$this->aocdPath} {$day} {$year} -e >/dev/null 2>/dev/null", $output, $return_var);
-
-        if ($return_var !== 0) {
-            throw new \Exception("aocd exited with non-zero status {$return_var}");
-        }
-
         $answerFile = sprintf(
             '%s/%d_%02d%s_answer.txt',
             $this->dataDirectory,
@@ -116,6 +109,19 @@ class AocdWrapper implements PuzzleAnswerProviderInterface, PuzzleInputProviderI
             ($part == 1) ? 'a' : 'b',
         );
 
+        // If answer file already exists, return it directly
+        if (File::exists($answerFile)) {
+            return File::get($answerFile);
+        }
+
+        // Calling aocd with the -e flag ensures that examples and answers (if any) are downloaded
+        exec("{$this->aocdPath} {$day} {$year} -e >/dev/null 2>/dev/null", $output, $return_var);
+
+        if ($return_var !== 0) {
+            throw new \Exception("aocd exited with non-zero status {$return_var}");
+        }
+
+        // Check if file exists now, after we have run aocd
         if (File::exists($answerFile)) {
             return File::get($answerFile);
         }
