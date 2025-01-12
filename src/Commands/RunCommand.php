@@ -6,7 +6,6 @@ namespace NorthernBytes\AocHelper\Commands;
 
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use NorthernBytes\AocHelper\Interfaces\PuzzleAnswerProviderInterface;
 use NorthernBytes\AocHelper\Interfaces\PuzzleInputProviderInterface;
