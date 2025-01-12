@@ -14,6 +14,7 @@ use NorthernBytes\AocHelper\PuzzleInputFileReader;
 use NorthernBytes\AocHelper\StdinReader;
 use NorthernBytes\AocHelper\Support\AocdWrapper;
 
+use NorthernBytes\AocHelper\Support\Input;
 use function Termwind\render;
 
 class RunCommand extends Command
@@ -24,9 +25,13 @@ class RunCommand extends Command
 
     public function handle(): int
     {
-        $day = $this->argument('day');
-        $part = $this->argument('part');
-        $year = $this->option('year') ?: date('Y');
+        [$year, $day, $part] = Input::validate(
+            $this->option('year'),
+            $this->argument('day'),
+            $this->argument('part')
+        );
+
+        dd($year, $day, $part);
 
         // Instantiate a class for the correct puzzle
         $namespace = Str::of(config('aochelper.solution.path'))
