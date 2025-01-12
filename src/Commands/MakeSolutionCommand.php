@@ -8,6 +8,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use NorthernBytes\AocHelper\Support\Aoc;
+use NorthernBytes\AocHelper\Support\Input;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class MakeSolutionCommand extends Command
@@ -18,9 +19,12 @@ class MakeSolutionCommand extends Command
 
     public function handle(): int
     {
-        $day = $this->argument('day');
-        $year = $this->argument('year') ?: date('Y');
         $force = $this->option('force');
+
+        [$year, $day] = Input::validate(
+            $this->argument('year'),
+            $this->argument('day')
+        );
 
         $this->components->info(
             sprintf('Preparing Advent of Code %s :: Day %s', $year, $day),

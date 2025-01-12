@@ -7,6 +7,7 @@ namespace NorthernBytes\AocHelper\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use NorthernBytes\AocHelper\Support\Aoc;
+use NorthernBytes\AocHelper\Support\Input;
 
 class FetchCommand extends Command
 {
@@ -16,9 +17,12 @@ class FetchCommand extends Command
 
     public function handle(): int
     {
-        $day = $this->argument('day');
-        $year = $this->argument('year') ?: date('Y');
         $force = $this->option('force');
+
+        [$year, $day] = Input::validate(
+            $this->argument('year'),
+            $this->argument('day')
+        );
 
         $inputPath = storage_path('aoc/input');
         $inputFile = $inputPath . sprintf('/%d_%02d_input.txt', $year, $day);
