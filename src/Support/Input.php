@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NorthernBytes\AocHelper\Support;
 
 use Illuminate\Validation\ValidationException;
@@ -19,7 +21,7 @@ class Input
         return [
             $year,
             $day,
-            $part
+            $part,
         ];
     }
 
@@ -40,7 +42,7 @@ class Input
             };
 
             throw ValidationException::withMessages([
-                'Year must be between 2015 and ' . $endYear
+                'Year must be between 2015 and ' . $endYear,
             ]);
         }
     }
@@ -49,17 +51,17 @@ class Input
     {
         if ($day < 1 || $day > 25) {
             throw ValidationException::withMessages([
-                'Day must be between 1 and 25'
+                'Day must be between 1 and 25',
             ]);
         }
     }
 
     private static function validatePart(mixed $part): void
     {
-        if (!is_null($part)) {
+        if (! is_null($part)) {
             if ($part < 1 || $part > 2) {
                 throw ValidationException::withMessages([
-                    'Part must be 1 or 2'
+                    'Part must be 1 or 2',
                 ]);
             }
         }

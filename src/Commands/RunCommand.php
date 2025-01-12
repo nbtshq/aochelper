@@ -13,8 +13,8 @@ use NorthernBytes\AocHelper\Puzzle;
 use NorthernBytes\AocHelper\PuzzleInputFileReader;
 use NorthernBytes\AocHelper\StdinReader;
 use NorthernBytes\AocHelper\Support\AocdWrapper;
-
 use NorthernBytes\AocHelper\Support\Input;
+
 use function Termwind\render;
 
 class RunCommand extends Command
