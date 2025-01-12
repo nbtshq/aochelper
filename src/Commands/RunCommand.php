@@ -101,7 +101,7 @@ class RunCommand extends Command
         }
         if (! empty($storedAnswer)) {
             if ($storedAnswer == $answer) {
-                $this->comment('Answer matches previously stored answer.');
+                $this->info('Answer matches previously stored answer.');
             } else {
                 $this->error("Answer differs from previously stored answer: {$storedAnswer}");
             }
