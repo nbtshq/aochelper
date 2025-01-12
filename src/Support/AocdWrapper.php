@@ -124,7 +124,7 @@ class AocdWrapper implements PuzzleAnswerProviderInterface, PuzzleInputProviderI
         }
 
         // Check if file exists now, after we have run aocd
-        if (File::exists($answerFile)) {
+        if (File::exists($answerFile)) { // @phpstan-ignore if.alwaysFalse
             return File::get($answerFile);
         }
 
